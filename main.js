@@ -1,44 +1,39 @@
-import { IncentivSigner, IncentivResolver } from "https://cdn.jsdelivr.net/gh/IncentivNetwork/incentiv-dapp-sdk/dist/incentiv.min.js";
-import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
-
-const Environment = {
-  Portal: "https://testnet.incentiv.net",
-  RPC: "https://rpc.testnet.incentiv.net"
-};
-
 let signer;
 
-window.connectWallet = async function () {
-  const address = await IncentivResolver.getAccountAddress(Environment.Portal);
-  const provider = new ethers.providers.StaticJsonRpcProvider(Environment.RPC);
-  signer = new IncentivSigner({
+async function connectWallet() {
+  const portalUrl = "https://testnet.incentiv.net";
+  const rpcUrl = "https://rpc.testnet.incentiv.net";
+
+  const address = await window.IncentivResolver.getAccountAddress(portalUrl);
+  const provider = new ethers.providers.StaticJsonRpcProvider(rpcUrl);
+
+  signer = new window.IncentivSigner({
     address,
     provider,
-    environment: Environment.Portal
+    environment: portalUrl
   });
 
   document.getElementById("status").textContent = "Wallet connected: " + address;
 }
 
-window.enterGame = async function () {
-  if (!signer) return alert("Connect wallet first");
+async function enterGame() {
+  if (!signer) {
+    alert("Please connect wallet first!");
+    return;
+  }
 
-  const recipient = "0xdddcb5275f1a8619b87da36d04bc6b019c6c66c7";
-  const txValue = ethers.utils.parseUnits("0.005", 18);
+  const tx = {
+    to: "0xdddcb5275f1a8619b87da36d04bc6b019c6c66c7",
+    value: ethers.utils.parseEther("0.005"),
+    data: "0x"
+  };
 
   try {
-    const hash = await signer.sendTransaction({
-      to: recipient,
-      value: txValue
-    });
-    document.getElementById("status").textContent = "Payment sent. Hash: " + hash;
+    const hash = await signer.sendTransaction(tx);
+    document.getElementById("status").textContent = "Paid! Starting game...";
     document.getElementById("game").style.display = "block";
-  } catch (e) {
-    console.error(e);
-    alert("Payment failed");
+  } catch (err) {
+    document.getElementById("status").textContent = "Transaction failed.";
+    console.error(err);
   }
 }
-
-// ✅ Connect to global scope
-window.connectWallet = connectWallet;
-window.enterGame = enterGame;
