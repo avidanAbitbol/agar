@@ -4,10 +4,10 @@ async function connectWallet() {
   const portalUrl = "https://testnet.incentiv.net";
   const rpcUrl = "https://rpc.testnet.incentiv.net";
 
-  const address = await window.IncentivResolver.getAccountAddress(portalUrl);
+  const address = await IncentivResolver.getAccountAddress(portalUrl);
   const provider = new ethers.providers.StaticJsonRpcProvider(rpcUrl);
 
-  signer = new window.IncentivSigner({
+  signer = new IncentivSigner({
     address,
     provider,
     environment: portalUrl
