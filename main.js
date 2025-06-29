@@ -23,8 +23,8 @@ async function connectWallet() {
 async function enterGame() {
   if (!signer) return alert("Connect wallet first");
 
-  const recipient = "0xdddcb5275f1a8619b87da36d04bc6b019c6c66c7"; // your check wallet
-  const txValue = ethers.utils.parseUnits("0.005", 18); // TCENT = 18 decimals
+  const recipient = "0xdddcb5275f1a8619b87da36d04bc6b019c6c66c7";
+  const txValue = ethers.utils.parseUnits("0.005", 18);
 
   try {
     const hash = await signer.sendTransaction({
@@ -39,5 +39,6 @@ async function enterGame() {
   }
 }
 
+// ✅ Connect to global scope
 window.connectWallet = connectWallet;
 window.enterGame = enterGame;
