@@ -8,7 +8,7 @@ const Environment = {
 
 let signer;
 
-async function connectWallet() {
+window.connectWallet = async function () {
   const address = await IncentivResolver.getAccountAddress(Environment.Portal);
   const provider = new ethers.providers.StaticJsonRpcProvider(Environment.RPC);
   signer = new IncentivSigner({
@@ -20,7 +20,7 @@ async function connectWallet() {
   document.getElementById("status").textContent = "Wallet connected: " + address;
 }
 
-async function enterGame() {
+window.enterGame = async function () {
   if (!signer) return alert("Connect wallet first");
 
   const recipient = "0xdddcb5275f1a8619b87da36d04bc6b019c6c66c7";
