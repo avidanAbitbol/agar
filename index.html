@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Incentiv Agar Entry</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #111; color: #fff; }
+    canvas { border: 1px solid #444; background: #222; display: block; margin: 20px auto; }
+    button { padding: 10px 20px; font-size: 16px; margin: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Agar.io + Incentiv</h1>
+  <p>Entry fee: 0.005 TCENT</p>
+  <button onclick="connectWallet()">Connect Wallet</button>
+  <button onclick="enterGame()">Enter Game</button>
+  <p id="status">Waiting for wallet...</p>
+  <canvas id="game" width="600" height="400" style="display:none;"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
